@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/public/stylesheets/progress.css" />
+</head>
+
+<body>
+  <div class="background">
+    <%- include('partials/header.ejs') %>
+    <div class="subheader">
+      <h2>Weekly Goals</h2>
+    </div>
+    <div class="container">
+      <div class="content">
+        <div class="exercise-box">
+          <%- include('partials/this week.ejs') %>
+        </div>
+      </div>
+      <%- include('partials/progress sidebar.ejs') %>
+    </div>
+  </div>
+  <script>
+    function edit(id) {
+      let num = id.substring(5);
+      let nameText = document.getElementById("ex-name-" + num).innerText;
+
+      if (document.getElementById("ex-sets-" + num)) {
+        let setsText = document
+          .getElementById("ex-sets-" + num)
+          .innerText.replace(/\D/g, "");
+        let repsText = document
+          .getElementById("ex-reps-" + num)
+          .innerText.replace(/\D/g, "");
+        let inputs = document.getElementsByClassName("invisible-" + num);
+
+        let name = inputs[0];
+        let sets = inputs[1];
+        let reps = inputs[2];
+
+        name.value = nameText;
+        sets.value = setsText;
+        reps.value = repsText;
+
+        document.getElementById("ex-name-" + num).className =
+          "ex-name"; /*removes the click-to-complete class*/
+        document.getElementById("ex-name-" + num).style.display = "none";
+        document.getElementById("ex-sets-" + num).style.display = "none";
+        document.getElementById("ex-reps-" + num).style.display = "none";
+        document.getElementById("edit-" + num).style.display = "none";
+        document.getElementById("save-" + num).className = "btn";
+
+        name.className = "input-text-" + num;
+        sets.className = "input-text-" + num;
+        reps.className = "input-text-" + num;
+      } else {
+        let minutesText = document
+          .getElementById("ex-minutes-" + num)
+          .innerText.replace(/\D/g, "");
+        let inputs = document.getElementsByClassName("invisible-" + num);
+
+        let name = inputs[0];
+        let minutes = inputs[1];
+
+        name.value = nameText;
+        minutes.value = minutesText;
+
+        document.getElementById("ex-name-" + num).style.display = "none";
+        document.getElementById("ex-minutes-" + num).style.display = "none";
+        document.getElementById("edit-" + num).style.display = "none";
+        document.getElementById("save-" + num).className = "btn";
+
+        name.className = "input-text-" + num;
+        minutes.className = "input-text-" + num;
+      }
+    }
+
+    function save(id) {
+      let num = id.substring(5);
+      document.getElementById("form-name-" + num).value =
+        document.getElementById("name-input-" + num).value;
+      document.getElementById("edit-index-" + num).value = num;
+
+      if (document.getElementById("ex-sets-" + num)) {
+        document.getElementById("isCardio-" + num).value = false;
+        document.getElementById("form-sets-" + num).value =
+          document.getElementById("sets-input-" + num).value;
+        document.getElementById("form-reps-" + num).value =
+          document.getElementById("reps-input-" + num).value;
+      } else {
+        document.getElementById("isCardio-" + num).value = true;
+        document.getElementById("form-minutes-" + num).value =
+          document.getElementById("minutes-input-" + num).value;
+      }
+
+      document.getElementById("edit-form-" + num).submit();
+    }
+
+    function del(id) {
+      let num = id.substring(4);
+      document.getElementById("panel-" + num).className = "panel gray-panel";
+      document.getElementById("panel-" + num).style.backgroundImage = "conic-gradient(lightgray, gray, lightgray)";
+      document.getElementById("weekdays-" + num).style.color = "gray";
+
+      setTimeout(() => {
+        document.getElementById("del-form-" + num).submit();
+      }, 3000);
+    }
+
+    function checkNumeric(id, text) {
+      let num = id.split("-")[2];
+      if (/[^0-9.]/.test(text)) {
+        document.getElementById("invisible-warn-" + num).className = "warn";
+      } else {
+        document.getElementById("invisible-warn-" + num).className =
+          "invisible-warn-" + num;
+      }
+    }
+  </script>
+</body>
+
+</html>

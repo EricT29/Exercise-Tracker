@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/public/stylesheets/weights.css" />
+</head>
+
+<body>
+  <div class="background">
+    <%- include('partials/header.ejs') %>
+    <div class="subheader">
+      <h2>Resistance Training</h2>
+    </div>
+    <div class="container">
+      <div class="content">
+        <form class="exercise-box" id="exercise-box" action="/add-exercise" method="post">
+          <div class="input-div">
+            <label class="input-label" onclick="focusName()">Name of Exercise</label>
+            <input type="text" class="input-text" id="name-input" name="name" />
+          </div>
+          <div class="input-div">
+            <label class="input-label" onclick="focusSets()">Sets</label>
+            <input type="number" class="input-text" id="sets-input" name="sets" />
+          </div>
+          <div class="input-div">
+            <label class="input-label" onclick="focusRep()">Reps</label>
+            <input type="number" class="input-text" id="reps-input" name="reps" />
+          </div>
+          <!-- break -->
+          <div class="break"></div>
+          <div class="date-picker" id="date-picker">
+            <div class="day unselected-day" onclick="selectDay(0)" id="0">
+              Sun
+            </div>
+            <div class="day unselected-day" onclick="selectDay(1)" id="1">
+              Mon
+            </div>
+            <div class="day unselected-day" onclick="selectDay(2)" id="2">
+              Tue
+            </div>
+            <div class="day unselected-day" onclick="selectDay(3)" id="3">
+              Wed
+            </div>
+            <div class="day unselected-day" onclick="selectDay(4)" id="4">
+              Thu
+            </div>
+            <div class="day unselected-day" onclick="selectDay(5)" id="5">
+              Fri
+            </div>
+            <div class="day unselected-day" onclick="selectDay(6)" id="6">
+              Sat
+            </div>
+          </div>
+          <!-- break -->
+          <div class="break"></div>
+          <div class="btn-div">
+            <button type="button" onclick="save()" class="save-btn">
+              Save
+            </button>
+          </div>
+          <input type="hidden" name="isCardio" value="false" />
+          <input type="hidden" name="weekDays" id="weekDays" value="" />
+          <input type="hidden" name="numDays" id="numDays" value="" />
+          <input type="hidden" name="dueDates" id="dueDates" value="" />
+          <input type="hidden" name="complete" id="complete" value="" />
+        </form>
+      </div>
+      <%- include('partials/weights sidebar.ejs') %>
+    </div>
+  </div>
+  <script>
+    var isSelected = [false, false, false, false, false, false, false];
+
+    function focusName() {
+      document.getElementById("name-input").focus();
+    }
+
+    function focusSets() {
+      document.getElementById("sets-input").focus();
+    }
+
+    function focusRep() {
+      document.getElementById("reps-input").focus();
+    }
+
+    function selectDay(numDay) {
+      if (isSelected[numDay]) {
+        document
+          .getElementById(numDay)
+          .classList.replace("selected-day", "unselected-day");
+        isSelected[numDay] = false;
+      } else {
+        document
+          .getElementById(numDay)
+          .classList.replace("unselected-day", "selected-day");
+        isSelected[numDay] = true;
+      }
+    }
+
+    function save() {
+      const date = new Date();
+      var today = date.getDay(); /*0-6*/
+      var weekDays = "";
+      var numDays = "";
+      var dueDates = "";
+      var complete = "";
+      var comma = ",";
+      var trailingCommaRegex = /(^,)|(,$)/g;
+      var dayStrings = [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+      ];
+
+      for (let i = 0; i < 7; i++) {
+        if (isSelected[i]) {
+          var newDueDate = new Date();
+          if (today > i) {
+            newDueDate.setDate(
+              date.getDate() - (today - (i + 7))
+            ); /*if the date is in the past set the due date to the same day next week*/
+          } else {
+            newDueDate.setDate(date.getDate() + (i - today));
+          }
+          dueDates += newDueDate.toDateString() + comma; /*a full date representing when the exercise comes due*/
+          weekDays += dayStrings[i] + comma; /*a string of comma seperated three letter code weekdays representing the day of the week that the exercise comes due*/
+          numDays += i + comma; /*a 0-6 numerical code representing the day of the week that the exercise comes due*/
+          complete += "false" + comma; /*a boolean string representing whether or not an exercise was completed on time*/
+        }
+      }
+      weekDays = weekDays.replace(
+        trailingCommaRegex,
+        ""
+      );
+      numDays = numDays.replace(
+        trailingCommaRegex,
+        ""
+      );
+      dueDates = dueDates.replace(
+        trailingCommaRegex,
+        ""
+      );
+      complete = complete.replace(
+        trailingCommaRegex,
+        ""
+      );
+
+      document.getElementById("weekDays").value = weekDays;
+      document.getElementById("numDays").value = numDays;
+      document.getElementById("dueDates").value = dueDates;
+      document.getElementById("complete").value = complete;
+      document.getElementById("exercise-box").submit();
+    }
+  </script>
+</body>
+
+</html>

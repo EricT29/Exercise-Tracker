@@ -1,0 +1,121 @@
+<% var date = new Date()%>
+<%date.setHours(0,0,0,0)%>
+<% let day = date.getDay(); %>
+<% if (locals.exercises && locals.exercises.length) { %>
+<%for (let i = 0; i < locals.exercises.length; i++) { %>
+<% var weekDays = locals.exercises[i]["weekDays"].split(","); %>
+<% var numDays = locals.exercises[i]["numDays"].split(","); %>
+<% var dueDates = locals.exercises[i]["dueDates"].split(","); %>
+<% var complete = locals.exercises[i]["complete"].split(","); %>
+<% var isCompleted = false; %>
+<% var isOverdue = false; %>
+<% var isUpcoming = false; %>
+<% var numComplete = 0;%>
+<% var numOverdue = 0;%>
+<% var numUpcoming = 0;%>
+<% var weekdayColors = []%>
+<% for (let i = 0; i < dueDates.length; i++)  { %>
+<%  if (JSON.parse(complete[i])) { %>
+<%     isCompleted = true %>
+<%     numComplete++;     %>
+<%     weekdayColors.push("gold")%>
+<%  } else if (date > Date.parse(dueDates[i])) { %>
+<%    isOverdue = true %>
+<%    numOverdue++;    %>
+<%    weekdayColors.push("red")%>
+<%  } else { %>
+<%    isUpcoming = true; %>
+<%    numUpcoming++; %>
+<%    weekdayColors.push("darkblue")%>
+<%  } %>
+<% } %>
+<% var bg = [];%>
+<% let red_bg = "red,darkred";%>
+<% let blue_bg = "paleturquoise,cornflowerblue";%>
+<% let gold_bg = "gold,rgb(218, 165, 32)";%>
+<%if (isCompleted) {%>
+<%  bg.push(gold_bg);%>
+<%}%>
+  <%if (isOverdue) {%>
+<%  bg.push(red_bg);%>
+<%}%>
+  <%if (isUpcoming) {%>
+<%  bg.push(blue_bg);%>
+<%}%>
+  <%bg = bg.sort((a, b) => 0.5 - Math.random());%>
+<%bg = "conic-gradient(" +  bg.toString() + ")"%>
+
+<% numsArr = [numComplete, numOverdue, numUpcoming] %>
+<%var maxIndex = numsArr.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);%>
+<% if (maxIndex === 0) { %>
+<div class="panel gold-panel" id="panel-<%-i%>">
+  <%} else if (maxIndex == 1) { %>
+  <div class="panel red-panel" id="panel-<%-i%>">
+    <%} else {%>
+    <div class="panel" id="panel-<%-i%>">
+      <% } %>
+      <%for (let i = 0; i < weekDays.length; i++) { %>
+      <div class="weekdays" id="weekdays-<%-i%>" style="color:<%=weekdayColors[i]%>">
+        <%=weekDays[i];%>
+      </div>
+      <% } %>
+      <div class="ex-name" id="ex-name-<%-i%>">
+        <%-locals.exercises[i]["name"]%>
+      </div>
+      <input type="text" class="invisible-<%-i%>" id="name-input-<%-i%>" name="name" />
+      <% if (JSON.parse(locals.exercises[i]["isCardio"])) { %>
+      <div class="ex-minutes" id="ex-minutes-<%-i%>">
+        Minutes: <%-locals.exercises[i]["minutes"]%>
+      </div>
+      <input type="text" class="invisible-<%-i%>" id="minutes-input-<%-i%>" name="minutes" onkeyup="checkNumeric(this.id, this.value)" />
+      <div class="invisible-warn-<%-i%>" id="invisible-warn-<%-i%>">
+        Minutes must be a numeric value.
+      </div>
+      <% } else { %>
+      <div class="ex-sets" id="ex-sets-<%-i%>">
+        Sets: <%-locals.exercises[i]["sets"]%>
+      </div>
+      <div class="ex-reps" id="ex-reps-<%-i%>">
+        Reps: <%-locals.exercises[i]["reps"]%>
+      </div>
+      <input type="text" class="invisible-<%-i%>" id="sets-input-<%-i%>" name="sets" onkeyup="checkNumeric(this.id, this.value)" />
+      <input type="text" class="invisible-<%-i%>" id="reps-input-<%-i%>" name="reps" onkeyup="checkNumeric(this.id, this.value)" />
+      <div class="invisible-warn-<%-i%>" id="invisible-warn-<%-i%>">
+        Sets and Reps must be numeric values.
+      </div>
+      <% } %>
+      <div class="btn-div">
+        <button type="button" class="edit btn" id="edit-<%-i%>" onclick="edit(this.id)">
+          Edit
+        </button>
+        <button type="button" class="invisible-<%-i%>" id="save-<%-i%>" onclick="save(this.id)">
+          Save
+        </button>
+        <button type="button" class="del btn" id="del-<%-i%>" onclick="del(this.id)">
+          Delete
+        </button>
+      </div>
+    </div>
+    <script>
+      document.getElementById("panel-<%-i%>").style.backgroundImage = "<%- bg %>";
+    </script>
+    <form action="/edit-exercise" class="invisible-<%-i%>" id="edit-form-<%-i%>" method="post">
+      <input type="hidden" name="ex-name" id="form-name-<%-i%>" />
+      <input type="hidden" name="ex-sets" id="form-sets-<%-i%>" />
+      <input type="hidden" name="ex-reps" id="form-reps-<%-i%>" />
+      <input type="hidden" name="ex-minutes" id="form-minutes-<%-i%>" />
+      <input type="hidden" name="isCardio" id="isCardio-<%-i%>" />
+      <input type="hidden" name="index" id="edit-index-<%-i%>" value="<%-i%>" />
+      <input type="hidden" name="isMainPage" id="isMainPage-<%-i%>" value="false" />
+    </form>
+    <form action="/delete-exercise" class="invisible-<%-i%>" id="del-form-<%-i%>" method="post">
+      <input type="hidden" name="index" id="del-index-<%-i%>" value="<%-i%>" />
+      <input type="hidden" name="isMainPage" id="isMainPage-<%-i%>" value="false" />
+    </form>
+    <% } %>
+
+    <% } else { %>
+    <p class="nocard-text">
+      You don't have any progress to show. <br><br> Add goals with <a href="/weights">Resistance</a> or <a href="/cardio">Cardio</a> then come back to view your progress.
+    </p>
+    <% } %>

@@ -1,0 +1,199 @@
+.background {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.subheader {
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 92.5rem;
+  color: white;
+  background-color: cornflowerblue;
+  padding: 10px;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  transition-property: text-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+.subheader:hover {
+  text-shadow: 2px 2px 6px black;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.content {
+  width: 80rem;
+  height: 40rem;
+  border: 4px solid black;
+}
+
+.exercise-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.input-div {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-label {
+  font-weight: bold;
+  color: white;
+  background-color: cornflowerblue;
+  width: 20rem;
+  height: 1.5rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  text-align: center;
+  border-radius: 1rem;
+  transition-property: text-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+.input-label:hover {
+  text-shadow: 2px 1px 1px black;
+}
+
+.input-text {
+  margin-top: 1rem;
+  width: 18rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border-color: cadetblue;
+}
+
+.date-picker {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.day {
+  width: 4rem;
+  height: 4rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 4rem;
+  transition-property: text-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+.day:hover {
+  text-shadow: 2px 1px 1px black;
+}
+
+.selected-day {
+  background-color: cornflowerblue;
+}
+
+.unselected-day {
+  background-color: lightskyblue;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.btn-div {
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50rem;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: white;
+  background-color: cornflowerblue;
+  font-weight: bold;
+  font-size: 1rem;
+  transition-property: text-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+.save-btn:hover {
+  text-shadow: 2px 1px 1px black;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 13rem;
+  height: 40rem;
+  border: 4px solid black;
+  border-left: 0px;
+  background-color: lightskyblue;
+}
+
+.sidebar-header {
+  font-weight: 800;
+  padding: 16px;
+  color: white;
+  background-color: darkblue;
+  transition-property: text-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+.sidebar-header:hover {
+  text-shadow: 4px 4px 2px black;
+}
+
+.sidebar-item {
+  font-weight: bold;
+  padding: 4px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    to right,
+    lightskyblue 50%,
+    midnightblue 50%
+  );
+  transition-property: background-image color padding;
+  transition-duration: 1s, 1s;
+  transition-timing-function: ease-out, ease-in;
+}
+
+.sidebar-item:hover {
+  background-position: -100% 0%;
+  color: floralwhite;
+  padding: 16px;
+}
+
+.sidebar-item a {
+  color: black;
+  text-decoration: none;
+  transition-property: color;
+  transition-duration: 1.5s;
+  transition-timing-function: ease-out;
+}
+
+.sidebar-item:hover a {
+  color: floralwhite;
+}
