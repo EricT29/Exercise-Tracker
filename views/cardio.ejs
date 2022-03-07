@@ -18,7 +18,7 @@
   <div class="background">
     <%- include('partials/header.ejs') %>
     <div class="subheader">
-      <h2>Resistance Training</h2>
+      <h2>Cardio</h2>
     </div>
     <div class="container">
       <div class="content">
@@ -106,6 +106,7 @@
       var dueDates = "";
       var complete = "";
       var comma = ",";
+      var noneSelected = true;
       var trailingCommaRegex = /(^,)|(,$)/g;
       var dayStrings = [
         "Sun",
@@ -133,6 +134,14 @@
           complete += "false" + comma; /*a boolean string representing whether or not an exercise was completed on time*/
         }
       }
+
+
+      if (noneSelected) {
+        alert("You must select at least one day to exercise!");
+        return;
+      }
+
+
       weekDays = weekDays.replace(
         trailingCommaRegex,
         ""
