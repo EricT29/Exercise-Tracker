@@ -123,7 +123,7 @@
           var newDueDate = new Date();
           if (today > i) {
             newDueDate.setDate(
-              date.getDate() - (today - i + 7)
+              date.getDate() - (today - (i + 7))
             ); /*if the date is in the past set the due date to the same day next week*/
           } else {
             newDueDate.setDate(date.getDate() + (i - today));
@@ -135,7 +135,6 @@
           noneSelected = false;
         }
       }
-
 
       if (noneSelected) {
         alert("You must select at least one day to exercise!");

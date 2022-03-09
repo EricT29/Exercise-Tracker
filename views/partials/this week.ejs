@@ -54,9 +54,9 @@
     <%} else {%>
     <div class="panel" id="panel-<%-i%>">
       <% } %>
-      <%for (let i = 0; i < weekDays.length; i++) { %>
-      <div class="weekdays" id="weekdays-<%-i%>" style="color:<%=weekdayColors[i]%>">
-        <%=weekDays[i];%>
+      <%for (let j = 0; j < weekDays.length; j++) { %>
+      <div class="weekdays" id="weekdays-<%-i%>-<%-j%>" style="color:<%=weekdayColors[j]%>">
+        <%=weekDays[j];%>
       </div>
       <% } %>
       <div class="ex-name" id="ex-name-<%-i%>">

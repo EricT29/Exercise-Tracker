@@ -108,11 +108,15 @@
       let num = id.substring(4);
       document.getElementById("panel-" + num).className = "panel gray-panel";
       document.getElementById("panel-" + num).style.backgroundImage = "conic-gradient(lightgray, gray, lightgray)";
-      document.getElementById("weekdays-" + num).style.color = "gray";
+
+      for (let j = 0; j < document.getElementById("panel-" + num).getElementsByClassName("weekdays").length;; j++) {
+        console.log(document.getElementsByClassName("weekdays").length);
+        document.getElementById("weekdays-" + num + "-" + j).style.color = "gray";
+      }
 
       setTimeout(() => {
         document.getElementById("del-form-" + num).submit();
-      }, 3000);
+      }, 1500);
     }
 
     function checkNumeric(id, text) {
