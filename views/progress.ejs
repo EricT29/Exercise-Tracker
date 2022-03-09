@@ -109,8 +109,7 @@
       document.getElementById("panel-" + num).className = "panel gray-panel";
       document.getElementById("panel-" + num).style.backgroundImage = "conic-gradient(lightgray, gray, lightgray)";
 
-      for (let j = 0; j < document.getElementById("panel-" + num).getElementsByClassName("weekdays").length;; j++) {
-        console.log(document.getElementsByClassName("weekdays").length);
+      for (let j = 0; j < document.getElementById("panel-" + num).getElementsByClassName("weekdays").length; j++) {
         document.getElementById("weekdays-" + num + "-" + j).style.color = "gray";
       }
 

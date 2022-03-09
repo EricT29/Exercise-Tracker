@@ -7,9 +7,6 @@
 <% var numDays = locals.exercises[i]["numDays"].split(","); %>
 <% var dueDates = locals.exercises[i]["dueDates"].split(","); %>
 <% var complete = locals.exercises[i]["complete"].split(","); %>
-<% var isCompleted = false; %>
-<% var isOverdue = false; %>
-<% var isUpcoming = false; %>
 <% var numComplete = 0;%>
 <% var numOverdue = 0;%>
 <% var numUpcoming = 0;%>
@@ -22,37 +19,22 @@
 <%  } else if (date > Date.parse(dueDates[i])) { %>
 <%    isOverdue = true %>
 <%    numOverdue++;    %>
-<%    weekdayColors.push("red")%>
+<%    weekdayColors.push("rgb(233,116,81)")%>
 <%  } else { %>
 <%    isUpcoming = true; %>
 <%    numUpcoming++; %>
 <%    weekdayColors.push("darkblue")%>
 <%  } %>
 <% } %>
-<% var bg = [];%>
-<% let red_bg = "red,darkred";%>
-<% let blue_bg = "paleturquoise,cornflowerblue";%>
-<% let gold_bg = "gold,rgb(218, 165, 32)";%>
-<%if (isCompleted) {%>
-<%  bg.push(gold_bg);%>
-<%}%>
-  <%if (isOverdue) {%>
-<%  bg.push(red_bg);%>
-<%}%>
-  <%if (isUpcoming) {%>
-<%  bg.push(blue_bg);%>
-<%}%>
-  <%bg = bg.sort((a, b) => 0.5 - Math.random());%>
-<%bg = "conic-gradient(" +  bg.toString() + ")"%>
 
-<% numsArr = [numComplete, numOverdue, numUpcoming] %>
+<% numsArr = [numUpcoming, numOverdue, numComplete] %>
 <%var maxIndex = numsArr.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);%>
 <% if (maxIndex === 0) { %>
-<div class="panel gold-panel" id="panel-<%-i%>">
+<div class="panel" id="panel-<%-i%>">
   <%} else if (maxIndex == 1) { %>
-  <div class="panel red-panel" id="panel-<%-i%>">
+  <div class="panel gold-panel" id="panel-<%-i%>">
     <%} else {%>
-    <div class="panel" id="panel-<%-i%>">
+    <div class="panel red-panel" id="panel-<%-i%>">
       <% } %>
       <%for (let j = 0; j < weekDays.length; j++) { %>
       <div class="weekdays" id="weekdays-<%-i%>-<%-j%>" style="color:<%=weekdayColors[j]%>">
@@ -96,9 +78,6 @@
         </button>
       </div>
     </div>
-    <script>
-      document.getElementById("panel-<%-i%>").style.backgroundImage = "<%- bg %>";
-    </script>
     <form action="/edit-exercise" class="invisible-<%-i%>" id="edit-form-<%-i%>" method="post">
       <input type="hidden" name="ex-name" id="form-name-<%-i%>" />
       <input type="hidden" name="ex-sets" id="form-sets-<%-i%>" />
