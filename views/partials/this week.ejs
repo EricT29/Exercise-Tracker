@@ -27,8 +27,7 @@
 <%  } %>
 <% } %>
 
-<% numsArr = [numUpcoming, numOverdue, numComplete] %>
-<%var maxIndex = numsArr.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);%>
+<%var maxIndex = [numUpcoming, numComplete, numOverdue].reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);%>
 <% if (maxIndex === 0) { %>
 <div class="panel" id="panel-<%-i%>">
   <%} else if (maxIndex == 1) { %>
