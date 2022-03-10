@@ -34,6 +34,10 @@
             <label class="input-label" onclick="focusRep()">Reps</label>
             <input type="number" class="input-text" id="reps-input" name="reps" />
           </div>
+          <div class="input-div">
+            <label class="input-label" onclick="focusWeight()">Weight</label>
+            <input type="number" class="input-text" id="weight-input" name="weight" />
+          </div>
           <!-- break -->
           <div class="break"></div>
           <div class="date-picker" id="date-picker">
@@ -67,10 +71,10 @@
             </button>
           </div>
           <input type="hidden" name="isCardio" value="false" />
-          <input type="hidden" name="weekDays" id="weekDays" value="" />
-          <input type="hidden" name="numDays" id="numDays" value="" />
-          <input type="hidden" name="dueDates" id="dueDates" value="" />
-          <input type="hidden" name="complete" id="complete" value="" />
+          <input type="hidden" name="weekDays" id="weekDays"/>
+          <input type="hidden" name="numDays" id="numDays"/>
+          <input type="hidden" name="dueDates" id="dueDates"/>
+          <input type="hidden" name="complete" id="complete"/>
         </form>
       </div>
       <%- include('partials/weights sidebar.ejs') %>
@@ -82,13 +86,14 @@
     function focusName() {
       document.getElementById("name-input").focus();
     }
-
     function focusSets() {
       document.getElementById("sets-input").focus();
     }
-
     function focusRep() {
       document.getElementById("reps-input").focus();
+    }
+    function focusWeight() {
+      document.getElementById("weight-input").focus();
     }
 
     function selectDay(numDay) {

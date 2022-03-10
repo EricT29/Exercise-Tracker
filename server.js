@@ -67,6 +67,7 @@ app.post("/edit-exercise", (req, res) => {
   } else {
     toEdit["sets"] = exerciseValues["ex-sets"];
     toEdit["reps"] = exerciseValues["ex-reps"];
+    toEdit["weight"] = exerciseValues["ex-weight"];
   }
   cookie[exerciseValues["index"]] = toEdit;
   res.cookie("exercises", cookie, {

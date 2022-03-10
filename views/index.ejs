@@ -24,7 +24,9 @@
     </div>
     <div class="container">
       <div class="content">
-        <% noneToday = true; %> <% if (locals.exercises) { %> <%for (let i = 0; i <
+        <% noneToday = true; %>
+        <% if (locals.exercises) { %>
+        <%for (let i = 0; i <
           locals.exercises.length; i++) { %>
         <% var numDays = locals.exercises[i]["numDays"].split(","); %>
         <% var complete = locals.exercises[i]["complete"].split(",");%>
@@ -53,6 +55,7 @@
             Minutes: <%-locals.exercises[i]["minutes"]%>
           </div>
           <input type="text" class="invisible-<%-i%>" id="minutes-input-<%-i%>" name="minutes" onkeyup="checkNumeric(this.id, this.value)" />
+
           <div class="invisible-warn-<%-i%>" id="invisible-warn-<%-i%>">
             Minutes must be a numeric value.
           </div>
@@ -60,13 +63,21 @@
           <div class="ex-sets" id="ex-sets-<%-i%>">
             Sets: <%-locals.exercises[i]["sets"]%>
           </div>
-          <input type="text" class="invisible-<%-i%>" id="sets-input-<%-i%>" name="sets" onkeyup="checkNumeric(this.id, this.value)" />
+
           <div class="ex-reps" id="ex-reps-<%-i%>">
             Reps: <%-locals.exercises[i]["reps"]%>
           </div>
+
+          <div class="ex-weight" id="ex-weight-<%-i%>">
+            Weight: <%-locals.exercises[i]["weight"]%>
+          </div>
+
+          <input type="text" class="invisible-<%-i%>" id="sets-input-<%-i%>" name="sets" onkeyup="checkNumeric(this.id, this.value)" />
           <input type="text" class="invisible-<%-i%>" id="reps-input-<%-i%>" name="reps" onkeyup="checkNumeric(this.id, this.value)" />
+          <input type="text" class="invisible-<%-i%>" id="weight-input-<%-i%>" name="weight" onkeyup="checkNumeric(this.id, this.value)" />
+
           <div class="invisible-warn-<%-i%>" id="invisible-warn-<%-i%>">
-            Sets and Reps must be numeric values.
+            Sets, Reps, & Weight must be numeric values.
           </div>
           <% } %>
           <div class="btn-div">
@@ -85,6 +96,7 @@
           <input type="hidden" name="ex-name" id="form-name-<%-i%>" />
           <input type="hidden" name="ex-sets" id="form-sets-<%-i%>" />
           <input type="hidden" name="ex-reps" id="form-reps-<%-i%>" />
+          <input type="hidden" name="ex-weight" id="form-weight-<%-i%>" />
           <input type="hidden" name="ex-minutes" id="form-minutes-<%-i%>" />
           <input type="hidden" name="isCardio" id="isCardio-<%-i%>" />
           <input type="hidden" name="index" id="edit-index-<%-i%>" value="<%-i%>" />
@@ -97,7 +109,10 @@
         <form action="/complete-exercise" class="invisible-<%-i%>" id="cmpl-form-<%-i%>" method="post">
           <input type="hidden" name="index" id="compl-index-<%-i%>" value="<%-i%>" />
         </form>
-        <% noneToday = false %> <% } %> <% } %> <% if (noneToday) { %>
+        <% noneToday = false %>
+        <% } %>
+        <% } %>
+        <% if (noneToday) { %>
         <p class="none-today">You don't have any exercises due today!</p>
         <% } %> <% } else { %>
         <p class="nocard-text">
@@ -131,27 +146,34 @@
         let repsText = document
           .getElementById("ex-reps-" + num)
           .innerText.replace(/\D/g, "");
+        let weightText = document
+          .getElementById("ex-weight-" + num)
+          .innerText.replace(/\D/g, "");
         let inputs = document.getElementsByClassName("invisible-" + num);
 
         let name = inputs[0];
         let sets = inputs[1];
         let reps = inputs[2];
+        let weight = inputs[3];
 
         name.value = nameText;
         sets.value = setsText;
         reps.value = repsText;
+        weight.value = weightText;
 
         document.getElementById("ex-name-" + num).className =
           "ex-name"; /*removes the click-to-complete class*/
         document.getElementById("ex-name-" + num).style.display = "none";
         document.getElementById("ex-sets-" + num).style.display = "none";
         document.getElementById("ex-reps-" + num).style.display = "none";
+        document.getElementById("ex-weight-" + num).style.display = "none";
         document.getElementById("edit-" + num).style.display = "none";
         document.getElementById("save-" + num).className = "btn";
 
         name.className = "input-text-" + num;
         sets.className = "input-text-" + num;
         reps.className = "input-text-" + num;
+        weight.className = "input-text-" + num;
       } else {
         let minutesText = document
           .getElementById("ex-minutes-" + num)
@@ -186,6 +208,8 @@
           document.getElementById("sets-input-" + num).value;
         document.getElementById("form-reps-" + num).value =
           document.getElementById("reps-input-" + num).value;
+        document.getElementById("form-weight-" + num).value =
+          document.getElementById("weight-input-" + num).value;
       } else {
         document.getElementById("isCardio-" + num).value = true;
         document.getElementById("form-minutes-" + num).value =

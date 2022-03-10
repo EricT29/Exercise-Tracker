@@ -40,27 +40,34 @@
         let repsText = document
           .getElementById("ex-reps-" + num)
           .innerText.replace(/\D/g, "");
+        let weightText = document
+          .getElementById("ex-weight-" + num)
+          .innerText.replace(/\D/g, "");
         let inputs = document.getElementsByClassName("invisible-" + num);
 
         let name = inputs[0];
         let sets = inputs[1];
         let reps = inputs[2];
+        let weight = inputs[3];
 
         name.value = nameText;
         sets.value = setsText;
         reps.value = repsText;
+        weight.value = weightText;
 
         document.getElementById("ex-name-" + num).className =
           "ex-name"; /*removes the click-to-complete class*/
         document.getElementById("ex-name-" + num).style.display = "none";
         document.getElementById("ex-sets-" + num).style.display = "none";
         document.getElementById("ex-reps-" + num).style.display = "none";
+        document.getElementById("ex-weight-" + num).style.display = "none";
         document.getElementById("edit-" + num).style.display = "none";
         document.getElementById("save-" + num).className = "btn";
 
         name.className = "input-text-" + num;
         sets.className = "input-text-" + num;
         reps.className = "input-text-" + num;
+        weight.className = "input-text-" + num;
       } else {
         let minutesText = document
           .getElementById("ex-minutes-" + num)
@@ -95,6 +102,8 @@
           document.getElementById("sets-input-" + num).value;
         document.getElementById("form-reps-" + num).value =
           document.getElementById("reps-input-" + num).value;
+        document.getElementById("form-weight-" + num).value =
+          document.getElementById("weight-input-" + num).value;
       } else {
         document.getElementById("isCardio-" + num).value = true;
         document.getElementById("form-minutes-" + num).value =
