@@ -1,0 +1,290 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .background {
+    margin: 0px 0px 0px 0px;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .subheader {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 92.5rem;
+    color: white;
+    background-color: cornflowerblue;
+    padding: 10px;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    transition-property: text-shadow;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+  }
+  
+  .subheader:hover {
+    text-shadow: 2px 2px 6px black;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .content {
+    width: 80rem;
+    height: 40rem;
+    border: 4px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .nocard-text {
+    font-size: 3rem;
+  }
+  
+  .nocard-text > a {
+    text-decoration: none;
+  }
+  
+  .none-today {
+    font-size: 3rem;
+    animation-duration: 3s;
+    animation-name: upslide;
+  }
+  
+  @keyframes upslide {
+    from {
+      opacity: 0;
+      margin-top: 40%;
+    }
+  
+    to {
+      opacity: 1;
+      margin-top: 4%;
+    }
+  }
+  
+  .panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 1rem;
+    width: 20rem;
+    height: 10rem;
+    margin: 1rem;
+    font-weight: bold;
+    box-shadow: 2px 4px 8px;
+    background-image: conic-gradient(
+      paleturquoise,
+      cornflowerblue,
+      paleturquoise
+    );
+    transition-property: box-shadow, border, margin-top;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+  }
+  
+  .panel:hover {
+    margin-top: 0.5rem;
+    box-shadow: 4px 8px 16px;
+    border-top: 2px solid white;
+    border-bottom: 2px solid cornflowerblue;
+    border-right: 2px solid white;
+    border-left: 2px solid cornflowerblue;
+  }
+  
+  .click-to-complete {
+    transition-property: font-size, color;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+  }
+  
+  .click-to-complete:hover {
+    font-size: 2rem;
+    color: gold;
+  }
+  
+  .btn {
+    width: 5rem;
+    background-color: cornflowerblue;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+    transition-property: padding, border-radius;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+  }
+  
+  .btn:hover {
+    border-radius: 0rem;
+    border: 1px solid white;
+  }
+  
+  .gold-panel {
+    background-image: conic-gradient(
+      rgb(250, 250, 210),
+      gold,
+      rgb(250, 250, 210)
+    );
+    animation-fill-mode: forwards;
+    animation-name: gold-anim;
+    animation-duration: 4s;
+  }
+  
+  .gold-panel > .btn-div > .btn {
+    background-color: gold;
+  }
+  
+  .gold-panel:hover {
+    margin-top: 0.5rem;
+    box-shadow: 4px 8px 16px;
+    border-top: 2px solid gold;
+    border-bottom: 2px solid rgb(218, 165, 32);
+    border-right: 2px solid gold;
+    border-left: 2px solid rgb(218, 165, 32);
+  }
+  
+  @keyframes gold-anim {
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  
+  .red-panel {
+    background-image: conic-gradient(red, darkred, black);
+    animation-fill-mode: forwards;
+    animation-name: gold-anim;
+    animation-duration: 1.3s;
+  }
+  
+  .red-panel > .btn-div > .btn {
+    background-color: red;
+  }
+  
+  .red-panel:hover {
+    margin-top: 0.5rem;
+    box-shadow: 4px 8px 16px;
+    border-top: 2px solid red;
+    border-bottom: 2px solid darkred;
+    border-right: 2px solid red;
+    border-left: 2px solid darkred;
+  }
+  
+  @keyframes red-anim {
+    0% {
+      transform: translate(0rem, -0.5rem);
+    }
+  
+    10% {
+      transform: translate(0rem, 0.5rem);
+    }
+  
+    20% {
+      transform: translate(0rem, -0.5rem);
+    }
+  
+    30% {
+      transform: translate(0rem, 0.5rem);
+    }
+  
+    40% {
+      transform: translate(0rem, -0.5rem);
+    }
+  
+    50% {
+      transform: translate(0rem, 0.5rem);
+    }
+  
+    60% {
+      transform: translate(0rem, -0.5rem);
+    }
+  
+    70% {
+      transform: translate(0rem, 0.5rem);
+    }
+  
+    80% {
+      transform: translate(0rem, -0.5rem);
+    }
+  
+    90% {
+      transform: translate(0rem, 0.5rem);
+    }
+  
+    100% {
+      transform: translate(0rem, -0.5rem);
+    }
+  }
+  
+  .gray-panel {
+    color: gray;
+    background-image: conic-gradient(lightgray, gray, lightgray);
+    animation-fill-mode: forwards;
+    animation-name: gray-anim;
+    animation-duration: 3s;
+  }
+  
+  .gray-panel:hover {
+    margin-top: 0.5rem;
+    box-shadow: 4px 8px 16px;
+    border-top: 2px solid lightgray;
+    border-bottom: 2px solid gray;
+    border-right: 2px solid lightgray;
+    border-left: 2px solid gray;
+  }
+  
+  .gray-panel > .btn-div > .btn {
+    background-color: gray;
+  }
+  
+  @keyframes gray-anim {
+    to {
+      opacity: 0;
+      background-image: none;
+      border: none;
+    }
+  }
+  
+  *[class^="invisible"] {
+    display: none;
+  }
+  
+  div[class^="invisible-warn"] {
+    display: none;
+  }
+  
+  input[class^="input-text"] {
+    width: 80%;
+    border-radius: 1rem;
+    font-weight: bold;
+  }
+  
+  .warn {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .ex-name {
+    font-size: 1.5rem;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .edit {
+    margin-right: 1rem;
+  }
+  
+  .del {
+    margin-left: 1rem;
+  }
+  

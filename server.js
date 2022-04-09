@@ -26,6 +26,38 @@ app.get("/cardio", (req, res) => {
   res.render("cardio.ejs");
 });
 
+app.get("/progress", (req, res) => {
+  var cookie = req.cookies["exercises"];
+  aWeekAgo = new Date();
+  aWeekAgo.setDate(new Date().getDate() - 7);
+
+  if (cookie) {
+    for (let i = 0; i < cookie.length; i++) {
+      let dueDates = cookie[i]["dueDates"].split(",");
+      for (let j = 0; j < dueDates.length; j++) {
+        oldDate = dueDates[j];
+        if (oldDate <= aWeekAgo) {
+          newDate = new Date();
+          while (newDate.getDay() != oldDate.getDay()) {
+            newDate.setDate(newDate.getDate() + 1);
+          }
+          cookie[i]["dueDates"][j] = newDate;
+        }
+      }
+    }
+    res.cookie("exercises", cookie, {
+      expires: new Date(Date.now() + 604800000),
+    });
+    res.render("progress.ejs", { exercises: req.cookies["exercises"] });
+  } else {
+    res.render("progress.ejs");
+  }
+});
+
+app.get("/overview", (req, res) => {
+  res.render("overview.ejs");
+});
+
 app.post("/add-exercise", (req, res) => {
   var exerciseValues = req.body;
   var cookie = req.cookies["exercises"];
@@ -95,34 +127,6 @@ app.post("/delete-exercise", (req, res) => {
     isMainPage
       ? res.render("index.ejs", { exercises: cookie })
       : res.render("progress.ejs", { exercises: cookie });
-  }
-});
-
-app.get("/progress", (req, res) => {
-  var cookie = req.cookies["exercises"];
-  aWeekAgo = new Date();
-  aWeekAgo.setDate(new Date().getDate() - 7);
-
-  if (cookie) {
-    for (let i = 0; i < cookie.length; i++) {
-      let dueDates = cookie[i]["dueDates"].split(",");
-      for (let j = 0; j < dueDates.length; j++) {
-        oldDate = dueDates[j];
-        if (oldDate <= aWeekAgo) {
-          newDate = new Date();
-          while (newDate.getDay() != oldDate.getDay()) {
-            newDate.setDate(newDate.getDate() + 1);
-          }
-          cookie[i]["dueDates"][j] = newDate;
-        }
-      }
-    }
-    res.cookie("exercises", cookie, {
-      expires: new Date(Date.now() + 604800000),
-    });
-    res.render("progress.ejs", { exercises: req.cookies["exercises"] });
-  } else {
-    res.render("progress.ejs");
   }
 });
 
