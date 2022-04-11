@@ -288,3 +288,8 @@ body {
     margin-left: 1rem;
   }
   
+  #my-chart.bar {
+    height: 200px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
