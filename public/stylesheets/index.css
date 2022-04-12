@@ -141,7 +141,7 @@ body {
   animation-duration: 4s;
 }
 
-.gold-panel > .btn-div > .btn {
+.gold-panel .btn {
   background-color: gold;
 }
 
@@ -167,7 +167,7 @@ body {
   animation-duration: 1.3s;
 }
 
-.red-panel > .btn-div > .btn {
+.red-panel .btn {
   background-color: red;
 }
 
@@ -243,7 +243,7 @@ body {
   border-left: 2px solid gray;
 }
 
-.gray-panel > .btn-div > .btn {
+.gray-panel .btn {
   background-color: gray;
 }
 
