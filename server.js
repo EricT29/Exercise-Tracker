@@ -55,7 +55,8 @@ app.get("/progress", (req, res) => {
 });
 
 app.get("/overview", (req, res) => {
-  res.render("overview.ejs");
+  var cookie = req.cookies["exercises"];
+  res.render("overview.ejs", { exercises: cookie });
 });
 
 app.post("/add-exercise", (req, res) => {
@@ -100,6 +101,9 @@ app.post("/edit-exercise", (req, res) => {
     toEdit["sets"] = exerciseValues["ex-sets"];
     toEdit["reps"] = exerciseValues["ex-reps"];
     toEdit["weight"] = exerciseValues["ex-weight"];
+    toEdit["setsHist"] = toEdit["setsHist"].concat(",").concat(exerciseValues["ex-sets"]);
+    toEdit["repsHist"] = toEdit["repsHist"].concat(",").concat(exerciseValues["ex-reps"]);
+    toEdit["weightHist"] = toEdit["weightHist"].concat(",").concat(exerciseValues["ex-weight"]);
   }
   cookie[exerciseValues["index"]] = toEdit;
   res.cookie("exercises", cookie, {

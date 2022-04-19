@@ -1,6 +1,5 @@
 <% var date = new Date()%>
 <%date.setHours(0,0,0,0)%>
-<% let day = date.getDay(); %>
 <% if (locals.exercises && locals.exercises.length) { %>
 <%for (let i = 0; i < locals.exercises.length; i++) { %>
 <% var weekDays = locals.exercises[i]["weekDays"].split(","); %>

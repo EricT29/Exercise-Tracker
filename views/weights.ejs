@@ -75,6 +75,9 @@
           <input type="hidden" name="numDays" id="numDays"/>
           <input type="hidden" name="dueDates" id="dueDates"/>
           <input type="hidden" name="complete" id="complete"/>
+          <input type="hidden" name="setsHist" id="setsHist"/>
+          <input type="hidden" name="repsHist" id="repsHist"/>
+          <input type="hidden" name="weightHist" id="weightHist"/>
         </form>
       </div>
       <%- include('partials/weights sidebar.ejs') %>
@@ -117,6 +120,9 @@
       var numDays = "";
       var dueDates = "";
       var complete = "";
+      var setsHist = "";
+      var repsHist = "";
+      var weightHist = "";
       var comma = ",";
       var noneSelected = true;
       var trailingCommaRegex = /(^,)|(,$)/g;
@@ -141,7 +147,7 @@
             newDueDate.setDate(date.getDate() + (i - today));
           }
           dueDates += newDueDate.toDateString() + comma; /*a full date representing when the exercise comes due*/
-          weekDays += dayStrings[i] + comma; /*a string of comma seperated three letter code weekdays representing the day of the week that the exercise comes due*/
+          weekDays += dayStrings[i] + comma; /*a string of comma separated three letter code weekdays representing the day of the week that the exercise comes due*/
           numDays += i + comma; /*a 0-6 numerical code representing the day of the week that the exercise comes due*/
           complete += "false" + comma; /*a boolean string representing whether or not an exercise was completed on time*/
           noneSelected = false;
@@ -170,10 +176,17 @@
         ""
       );
 
+      setsHist = document.getElementById("sets-input").value;
+      repsHist = document.getElementById("reps-input").value;
+      weightHist = document.getElementById("weight-input").value;
+
       document.getElementById("weekDays").value = weekDays;
       document.getElementById("numDays").value = numDays;
       document.getElementById("dueDates").value = dueDates;
       document.getElementById("complete").value = complete;
+      document.getElementById("setsHist").value = setsHist;
+      document.getElementById("repsHist").value = repsHist;
+      document.getElementById("weightHist").value = weightHist;
       document.getElementById("exercise-box").submit();
     }
   </script>

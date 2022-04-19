@@ -26,8 +26,7 @@
       <div class="content">
         <% noneToday = true; %>
         <% if (locals.exercises) { %>
-        <%for (let i = 0; i <
-          locals.exercises.length; i++) { %>
+        <%for (let i = 0; i < locals.exercises.length; i++) { %>
         <% var numDays = locals.exercises[i]["numDays"].split(","); %>
         <% var complete = locals.exercises[i]["complete"].split(",");%>
         <% var index = numDays.indexOf(day.toString())%>

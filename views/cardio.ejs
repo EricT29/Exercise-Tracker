@@ -129,7 +129,7 @@
             newDueDate.setDate(date.getDate() + (i - today));
           }
           dueDates += newDueDate.toDateString() + comma; /*a full date representing when the exercise comes due*/
-          weekDays += dayStrings[i] + comma; /*a string of comma seperated three letter code weekdays representing the day of the week that the exercise comes due*/
+          weekDays += dayStrings[i] + comma; /*a string of comma separated three letter code weekdays representing the day of the week that the exercise comes due*/
           numDays += i + comma; /*a 0-6 numerical code representing the day of the week that the exercise comes due*/
           complete += "false" + comma; /*a boolean string representing whether or not an exercise was completed on time*/
           noneSelected = false;
@@ -140,7 +140,6 @@
         alert("You must select at least one day to exercise!");
         return;
       }
-
 
       weekDays = weekDays.replace(
         trailingCommaRegex,

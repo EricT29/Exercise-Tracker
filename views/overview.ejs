@@ -23,61 +23,90 @@
     <div class="container">
       <div class="content">
 
-        <table class="charts-css column show-heading multiple" id="my-chart">
-          <caption> Descriptive Chart Heading </caption>
-          <tr>
-            <td style="--size: calc(25 / 100)"> 1 </td>
-            <td style="--size: calc(50 / 100)"> 2 </td>
-            <td style="--size: calc(75 / 100)"> 3 </td>
-            <td style="--size: calc(100 / 100)"> 4 </td>
-          </tr>
-        </table>
+        <%function normalize(min, max) {%>
+        <%var delta = max - min;%>
+        <%return function(val) {%>
+        <%return (val - min) / delta;%>
+        <%};%>
+        <%}%>
 
-        <table class="charts-css area" id="my-chart">
-          <tbody>
-            <tr>
-              <td style="--start: 0.2; --size: 0.4"> <span class="data"> 40 </span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.4; --size: 0.8"> <span class="data"> 80 </span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.8; --size: 0.6"> <span class="data"> 60</span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.6; --size: 1.0"> <span class="data"> 100 </span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 1.0; --size: 0.3"> <span class="data"> 30</span> </td>
-            </tr>
-          </tbody>
-        </table>
+      <%if (locals.exercises) {%>
 
-        <table class="charts-css line" id="my-chart">
-          <tbody>
-            <tr>
-              <td style="--start: 0.0; --size: 0.4"> <span class="data"> 40</span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.4; --size: 0.2"> <span class="data"> 20 </span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.2; --size: 0.6"> <span class="data"> 60</span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.6; --size: 0.4"> <span class="data"> 40</span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.4; --size: 0.8"> <span class="data"> 80</span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.8; --size: 0.6"> <span class="data"> 60</span> </td>
-            </tr>
-            <tr>
-              <td style="--start: 0.6; --size: 1.0"> <span class="data"> 100</span> </td>
-            </tr>
-          </tbody>
-        </table>
+        <%for (let i = 0; i < locals.exercises.length; i++) { %>
+
+          <%var setsHistString = locals.exercises[i]["setsHist"].split(",");%>
+          <%var repsHistString = locals.exercises[i]["repsHist"].split(",");%>
+          <%var weightHistString = locals.exercises[i]["weightHist"].split(",");%>
+
+          <%var setsHist = locals.exercises[i]["setsHist"].split(",");%>
+          <%var repsHist = locals.exercises[i]["repsHist"].split(",");%>
+          <%var weightHist = locals.exercises[i]["weightHist"].split(",");%>
+
+            <%var highest = 0;%>
+            <%var lowest = 100%>
+            <%var highestMinusLowest%>
+
+            <%for (let j = 0; j < setsHist.length; j++) {%>
+              <%setsHist[j] = parseInt(setsHist[j]);%>
+              <%if (setsHist[j] > highest) {%>
+                <%highest = setsHist[j];%>
+              <%}%>
+              <%if (setsHist[j] < lowest) {%>
+                <%lowest = setsHist[j];%>
+              <%}%>
+            <%}%>
+            <%highestMinusLowest = highest - lowest;%>
+            <%for (let j = 0; j < setsHist.length; j++) {%>
+            <%setsHist[j] = ((setsHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
+            <%}%>
+
+            <%for (let j = 0; j < repsHist.length; j++) {%>
+              <%repsHist[j] = parseInt(repsHist[j]);%>
+              <%if (repsHist[j] > highest) {%>
+                <%highest = repsHist[j];%>
+              <%}%>
+              <%if (repsHist[j] < lowest) {%>
+                <%lowest = repsHist[j];%>
+              <%}%>
+            <%}%>
+            <%highestMinusLowest = highest - lowest;%>
+            <%for (let j = 0; j < repsHist.length; j++) {%>
+            <%repsHist[j] = ((repsHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
+            <%}%>
+
+            <%for (let j = 0; j < weightHist.length; j++) {%>
+              <%weightHist[j] = parseInt(weightHist[j]);%>
+              <%if (weightHist[j] > highest) {%>
+                <%highest = weightHist[j];%>
+              <%}%>
+              <%if (weightHist[j] < lowest) {%>
+                <%lowest = weightHist[j];%>
+              <%}%>
+            <%}%>
+            <%highestMinusLowest = highest - lowest;%>
+            <%for (let j = 0; j < weightHist.length; j++) {%>
+            <%weightHist[j] = ((weightHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
+            <%}%>
+
+          <table class="charts-css area multiple">
+
+            <tbody>
+
+              <th scope="row"> Sets </th>
+              <%for (let j = 1; j < setsHist.length; j++) {%>
+                <tr>
+                  <td style="--start: <%-setsHist[j-1]%>; --size: <%-setsHist[j]%>"> <span class="data"><%-setsHistString[j]%></span> </td>
+                </tr>
+              <%}%>
+
+            </tbody>
+
+          </table>
+
+        <%}%>
+          
+      <%}%>
+
       </div>
       <%- include('partials/weights sidebar.ejs') %>
     </div>
