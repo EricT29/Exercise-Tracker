@@ -64,10 +64,11 @@
             </button>
           </div>
           <input type="hidden" name="isCardio" value="true" />
-          <input type="hidden" name="weekDays" id="weekDays" value="" />
-          <input type="hidden" name="numDays" id="numDays" value="" />
-          <input type="hidden" name="dueDates" id="dueDates" value="" />
-          <input type="hidden" name="complete" id="complete" value="" />
+          <input type="hidden" name="weekDays" id="weekDays"/>
+          <input type="hidden" name="numDays" id="numDays"/>
+          <input type="hidden" name="dueDates" id="dueDates"/>
+          <input type="hidden" name="complete" id="complete"/>
+          <input type="hidden" name="minutesHist" id="minutesHist"/>
         </form>
       </div>
       <%- include('partials/cardio sidebar.ejs') %>
@@ -105,6 +106,7 @@
       var numDays = "";
       var dueDates = "";
       var complete = "";
+      var minutesHist = "";
       var comma = ",";
       var noneSelected = true;
       var trailingCommaRegex = /(^,)|(,$)/g;
@@ -158,10 +160,13 @@
         ""
       );
 
+      minutesHist = document.getElementById("minutes-input").value;
+
       document.getElementById("weekDays").value = weekDays;
       document.getElementById("numDays").value = numDays;
       document.getElementById("dueDates").value = dueDates;
       document.getElementById("complete").value = complete;
+      document.getElementById("minutesHist").value = minutesHist;
       document.getElementById("exercise-box").submit();
     }
   </script>

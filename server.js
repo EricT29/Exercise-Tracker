@@ -96,19 +96,30 @@ app.post("/edit-exercise", (req, res) => {
   var toEdit = cookie[exerciseValues["index"]];
   toEdit["name"] = exerciseValues["ex-name"];
   if (JSON.parse(exerciseValues["isCardio"])) {
-    toEdit["minutes"] = exerciseValues["ex-minutes"];
+    if (toEdit["minutes"] != exerciseValues["ex-minutes"]) {
+      toEdit["minutes"] = exerciseValues["ex-minutes"];
+      toEdit["minutesHist"] = toEdit["minutesHist"]
+        .concat(",")
+        .concat(exerciseValues["ex-minutes"]);
+    }
   } else {
     if (toEdit["sets"] != exerciseValues["ex-sets"]) {
       toEdit["sets"] = exerciseValues["ex-sets"];
-      toEdit["setsHist"] = toEdit["setsHist"].concat(",").concat(exerciseValues["ex-sets"]);
+      toEdit["setsHist"] = toEdit["setsHist"]
+        .concat(",")
+        .concat(exerciseValues["ex-sets"]);
     }
     if (toEdit["reps"] != exerciseValues["ex-reps"]) {
-      toEdit["reps"] = exerciseValues["ex-reps"]
-      toEdit["repsHist"] = toEdit["repsHist"].concat(",").concat(exerciseValues["ex-reps"]);
+      toEdit["reps"] = exerciseValues["ex-reps"];
+      toEdit["repsHist"] = toEdit["repsHist"]
+        .concat(",")
+        .concat(exerciseValues["ex-reps"]);
     }
     if (toEdit["weight"] != exerciseValues["ex-weight"]) {
-      toEdit["weight"] = exerciseValues["ex-weight"]
-      toEdit["weightHist"] = toEdit["weightHist"].concat(",").concat(exerciseValues["ex-weight"]);
+      toEdit["weight"] = exerciseValues["ex-weight"];
+      toEdit["weightHist"] = toEdit["weightHist"]
+        .concat(",")
+        .concat(exerciseValues["ex-weight"]);
     }
   }
   cookie[exerciseValues["index"]] = toEdit;

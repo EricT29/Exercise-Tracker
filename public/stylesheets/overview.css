@@ -40,6 +40,22 @@ body {
     overflow: scroll;
   }
 
-  .table {
-    margin-bottom: auto;
+  .nograph-text {
+    font-size: 3rem;
+  }
+
+#cardio {
+    --color: paleturquoise;
+    border-bottom: 5px solid black;
+    margin-bottom: 1rem;
+  }
+
+  #weights {
+    --color: cornflowerblue;
+    border-bottom: 5px solid black;
+    margin-bottom: 1rem;
+  }
+
+  caption {
+    font-size: large;
   }
