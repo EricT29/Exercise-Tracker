@@ -39,3 +39,7 @@ body {
     border: 4px solid black;
     overflow: scroll;
   }
+
+  .table {
+    margin-bottom: auto;
+  }

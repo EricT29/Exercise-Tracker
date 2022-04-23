@@ -98,12 +98,18 @@ app.post("/edit-exercise", (req, res) => {
   if (JSON.parse(exerciseValues["isCardio"])) {
     toEdit["minutes"] = exerciseValues["ex-minutes"];
   } else {
-    toEdit["sets"] = exerciseValues["ex-sets"];
-    toEdit["reps"] = exerciseValues["ex-reps"];
-    toEdit["weight"] = exerciseValues["ex-weight"];
-    toEdit["setsHist"] = toEdit["setsHist"].concat(",").concat(exerciseValues["ex-sets"]);
-    toEdit["repsHist"] = toEdit["repsHist"].concat(",").concat(exerciseValues["ex-reps"]);
-    toEdit["weightHist"] = toEdit["weightHist"].concat(",").concat(exerciseValues["ex-weight"]);
+    if (toEdit["sets"] != exerciseValues["ex-sets"]) {
+      toEdit["sets"] = exerciseValues["ex-sets"];
+      toEdit["setsHist"] = toEdit["setsHist"].concat(",").concat(exerciseValues["ex-sets"]);
+    }
+    if (toEdit["reps"] != exerciseValues["ex-reps"]) {
+      toEdit["reps"] = exerciseValues["ex-reps"]
+      toEdit["repsHist"] = toEdit["repsHist"].concat(",").concat(exerciseValues["ex-reps"]);
+    }
+    if (toEdit["weight"] != exerciseValues["ex-weight"]) {
+      toEdit["weight"] = exerciseValues["ex-weight"]
+      toEdit["weightHist"] = toEdit["weightHist"].concat(",").concat(exerciseValues["ex-weight"]);
+    }
   }
   cookie[exerciseValues["index"]] = toEdit;
   res.cookie("exercises", cookie, {

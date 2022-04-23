@@ -24,23 +24,27 @@
       <div class="content">
 
         <%function normalize(min, max) {%>
-        <%var delta = max - min;%>
-        <%return function(val) {%>
-        <%return (val - min) / delta;%>
-        <%};%>
+          <%var delta = max - min;%>
+          <%return function(val) {%>
+            <%return (val - min) / delta;%>
+          <%};%>
         <%}%>
 
       <%if (locals.exercises) {%>
 
         <%for (let i = 0; i < locals.exercises.length; i++) { %>
 
+          <%var setsHist = locals.exercises[i]["setsHist"].split(",");%>
+          <%//Skip execution if there's only one history value%>
+          <%if (setsHist.length < 2) {%>
+            <%continue;%>
+          <%}%>
+          <%var repsHist = locals.exercises[i]["repsHist"].split(",");%>
+          <%var weightHist = locals.exercises[i]["weightHist"].split(",");%>
+
           <%var setsHistString = locals.exercises[i]["setsHist"].split(",");%>
           <%var repsHistString = locals.exercises[i]["repsHist"].split(",");%>
           <%var weightHistString = locals.exercises[i]["weightHist"].split(",");%>
-
-          <%var setsHist = locals.exercises[i]["setsHist"].split(",");%>
-          <%var repsHist = locals.exercises[i]["repsHist"].split(",");%>
-          <%var weightHist = locals.exercises[i]["weightHist"].split(",");%>
 
             <%var highest = 0;%>
             <%var lowest = 100%>
@@ -88,17 +92,40 @@
             <%weightHist[j] = ((weightHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
             <%}%>
 
-          <table class="charts-css area multiple">
+          <table class="charts-css area">
 
             <tbody>
 
-              <th scope="row"> Sets </th>
               <%for (let j = 1; j < setsHist.length; j++) {%>
                 <tr>
                   <td style="--start: <%-setsHist[j-1]%>; --size: <%-setsHist[j]%>"> <span class="data"><%-setsHistString[j]%></span> </td>
                 </tr>
               <%}%>
 
+            </tbody>
+
+          </table>
+
+          <table class="charts-css area">
+
+            <tbody>
+              <%for (let j = 1; j < repsHist.length; j++) {%>
+                <tr>
+                  <td style="--start: <%-repsHist[j-1]%>; --size: <%-repsHist[j]%>"> <span class="data"><%-repsHistString[j]%></span> </td>
+                </tr>
+              <%}%>
+            </tbody>
+
+          </table>
+
+          <table class="charts-css area">
+            
+            <tbody>
+              <%for (let j = 1; j < weightHist.length; j++) {%>
+                <tr>
+                  <td style="--start: <%-weightHist[j-1]%>; --size: <%-weightHist[j]%>"> <span class="data"><%-weightHistString[j]%></span> </td>
+                </tr>
+              <%}%>
             </tbody>
 
           </table>
