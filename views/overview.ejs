@@ -11,195 +11,131 @@
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/public/stylesheets/overview.css" />
-  <link rel="stylesheet" href="/public/stylesheets/charts.min.css" />
 </head>
 
 <body>
   <div class="background">
     <%- include('partials/header.ejs') %>
     <div class="subheader">
-      <h2>Overview</h2>
+      <h2>Weekly Goals</h2>
     </div>
     <div class="container">
       <div class="content">
-
-      <%var noneToShow = true%>
-      <%if (locals.exercises) {%>
-
-        <%for (let i = 0; i < locals.exercises.length; i++) { %>
-
-          <%if (JSON.parse(locals.exercises[i]["isCardio"])) {%>
-            <%var minutesHist = locals.exercises[i]["minutesHist"].split(",");%>
-            <%// Skip execution if there's only one history value%>
-            <%if (minutesHist.length < 2) {%>
-              <%continue;%>
-            <%}%>
-            <%var minutesHistString = locals.exercises[i]["minutesHist"].split(",");%>
-
-            <%var highest = 0;%>
-            <%var lowest = 100%>
-            <%var highestMinusLowest%>
-
-            <%for (let j = 0; j < minutesHist.length; j++) {%>
-              <%minutesHist[j] = parseInt(minutesHist[j]);%>
-              <%if (minutesHist[j] > highest) {%>
-                <%highest = minutesHist[j];%>
-              <%}%>
-              <%if (minutesHist[j] < lowest) {%>
-                <%lowest = minutesHist[j];%>
-              <%}%>
-            <%}%>
-            <%highestMinusLowest = highest - lowest;%>
-            <%for (let j = 0; j < minutesHist.length; j++) {%>
-            <%minutesHist[j] = ((minutesHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
-            <%}%>
-
-            <%if (minutesHist.length > 1) {%>
-              <table class="charts-css area show-heading" style="--color: paleturquoise; border-bottom: 5px solid black; margin-bottom: 1rem;">
-                <caption>Progress in minutes of <%-locals.exercises[i]["name"]%></caption>
-  
-                <tbody>
-  
-                  <%for (let j = 1; j < minutesHist.length; j++) {%>
-                    <tr>
-                      <td style="--start: <%-minutesHist[j-1]%>; --size: <%-minutesHist[j]%>"> <span class="data"><%-minutesHistString[j]%></span> </td>
-                    </tr>
-                  <%}%>
-  
-                </tbody>
-  
-              </table>
-            <%} else {%>
-              <caption>No progress to show%></caption>
-            <%}%>
-
-          <%} else {%>
-
-            <%var setsHist = locals.exercises[i]["setsHist"].split(",");%>
-            <%var repsHist = locals.exercises[i]["repsHist"].split(",");%>
-            <%var weightHist = locals.exercises[i]["weightHist"].split(",");%>
-            <%// Skip execution if there's only one history value | Must check all three as they are independent%>
-            <%if (setsHist.length + repsHist.length + weightHist.length == 3) {%>
-              <%continue;%>
-            <%}%>
-
-            <%var setsHistString = locals.exercises[i]["setsHist"].split(",");%>
-            <%var repsHistString = locals.exercises[i]["repsHist"].split(",");%>
-            <%var weightHistString = locals.exercises[i]["weightHist"].split(",");%>
-
-            <%var highest = 0;%>
-            <%var lowest = 100%>
-            <%var highestMinusLowest%>
-
-            <%for (let j = 0; j < setsHist.length; j++) {%>
-              <%setsHist[j] = parseInt(setsHist[j]);%>
-              <%if (setsHist[j] > highest) {%>
-                <%highest = setsHist[j];%>
-              <%}%>
-              <%if (setsHist[j] < lowest) {%>
-                <%lowest = setsHist[j];%>
-              <%}%>
-            <%}%>
-            <%highestMinusLowest = highest - lowest;%>
-            <%for (let j = 0; j < setsHist.length; j++) {%>
-            <%setsHist[j] = ((setsHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
-            <%}%>
-
-            <%for (let j = 0; j < repsHist.length; j++) {%>
-              <%repsHist[j] = parseInt(repsHist[j]);%>
-              <%if (repsHist[j] > highest) {%>
-                <%highest = repsHist[j];%>
-              <%}%>
-              <%if (repsHist[j] < lowest) {%>
-                <%lowest = repsHist[j];%>
-              <%}%>
-            <%}%>
-            <%highestMinusLowest = highest - lowest;%>
-            <%for (let j = 0; j < repsHist.length; j++) {%>
-            <%repsHist[j] = ((repsHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
-            <%}%>
-
-            <%for (let j = 0; j < weightHist.length; j++) {%>
-              <%weightHist[j] = parseInt(weightHist[j]);%>
-              <%if (weightHist[j] > highest) {%>
-                <%highest = weightHist[j];%>
-              <%}%>
-              <%if (weightHist[j] < lowest) {%>
-                <%lowest = weightHist[j];%>
-              <%}%>
-            <%}%>
-            <%highestMinusLowest = highest - lowest;%>
-            <%for (let j = 0; j < weightHist.length; j++) {%>
-            <%weightHist[j] = ((weightHist[j] - lowest) / highestMinusLowest).toFixed(1);%>
-            <%}%>
-
-            <table class="charts-css area show-heading" style="--color: cornflowerblue; border-bottom: 5px solid black; margin-bottom: 1rem;">
-              <%if (setsHist.length > 1) {%>
-                <caption>Progress in sets of <%-locals.exercises[i]["name"]%></caption>
-
-                <tbody>
-  
-                  <%for (let j = 1; j < setsHist.length; j++) {%>
-                    <tr>
-                      <td style="--start: <%-setsHist[j-1]%>; --size: <%-setsHist[j]%>"> <span class="data"><%-setsHistString[j]%></span> </td>
-                    </tr>
-                  <%}%>
-  
-                </tbody>
-              <%} else {%>
-                <caption>No progress to show in sets of <%-locals.exercises[i]["name"]%></caption>
-              <%}%>
-            </table>
-
-            <table class="charts-css area show-heading" style="--color: cornflowerblue; border-bottom: 5px solid black; margin-bottom: 1rem;">
-              <%if (repsHist.length > 1) {%>
-                <caption>Progress in reps of <%-locals.exercises[i]["name"]%></caption>
-
-                <tbody>
-  
-                  <%for (let j = 1; j < repsHist.length; j++) {%>
-                    <tr>
-                      <td style="--start: <%-repsHist[j-1]%>; --size: <%-repsHist[j]%>"> <span class="data"><%-repsHistString[j]%></span> </td>
-                    </tr>
-                  <%}%>
-  
-                </tbody>
-              <%} else {%>
-                <caption>No progress to show in reps of <%-locals.exercises[i]["name"]%></caption>
-              <%}%>
-            </table>
-
-              <table class="charts-css area show-heading" style="--color: cornflowerblue; border-bottom: 5px solid black; margin-bottom: 1rem;">
-                <%if (weightHist.length > 1) {%>
-                  <caption>Progress in weight of <%-locals.exercises[i]["name"]%></caption>
-
-                  <tbody>
-    
-                    <%for (let j = 1; j < weightHist.length; j++) {%>
-                      <tr>
-                        <td style="--start: <%-weightHist[j-1]%>; --size: <%-weightHist[j]%>"> <span class="data"><%-weightHistString[j]%></span> </td>
-                      </tr>
-                    <%}%>
-    
-                  </tbody>
-                <%} else {%>
-                  <caption>No progress to show in weight of <%-locals.exercises[i]["name"]%></caption>
-                <%}%>
-              </table>
-          <%}%>
-          <%noneToShow = false;%>
-        <%}%>
-          
-      <%}%>
-      <%if (noneToShow) {%>
-        <p class="nograph-text">You don't have any exercise progress to show yet.</p>
-      <%}%>
-
+        <div class="exercise-box">
+          <%- include('partials/this week.ejs') %>
+        </div>
       </div>
-      <%- include('partials/weights sidebar.ejs') %>
+      <%- include('partials/overview sidebar.ejs') %>
     </div>
   </div>
   <script>
+    function edit(id) {
+      let num = id.substring(5);
+      let nameText = document.getElementById("ex-name-" + num).innerText;
+
+      if (document.getElementById("ex-sets-" + num)) {
+        let setsText = document
+          .getElementById("ex-sets-" + num)
+          .innerText.replace(/\D/g, "");
+        let repsText = document
+          .getElementById("ex-reps-" + num)
+          .innerText.replace(/\D/g, "");
+        let weightText = document
+          .getElementById("ex-weight-" + num)
+          .innerText.replace(/\D/g, "");
+        let inputs = document.getElementsByClassName("invisible-" + num);
+
+        let name = inputs[0];
+        let sets = inputs[1];
+        let reps = inputs[2];
+        let weight = inputs[3];
+
+        name.value = nameText;
+        sets.value = setsText;
+        reps.value = repsText;
+        weight.value = weightText;
+
+        document.getElementById("ex-name-" + num).className =
+          "ex-name"; /*removes the click-to-complete class*/
+        document.getElementById("ex-name-" + num).style.display = "none";
+        document.getElementById("ex-sets-" + num).style.display = "none";
+        document.getElementById("ex-reps-" + num).style.display = "none";
+        document.getElementById("ex-weight-" + num).style.display = "none";
+        document.getElementById("edit-" + num).style.display = "none";
+        document.getElementById("save-" + num).className = "btn";
+
+        name.className = "input-text-" + num;
+        sets.className = "input-text-" + num;
+        reps.className = "input-text-" + num;
+        weight.className = "input-text-" + num;
+      } else {
+        let minutesText = document
+          .getElementById("ex-minutes-" + num)
+          .innerText.replace(/\D/g, "");
+        let inputs = document.getElementsByClassName("invisible-" + num);
+
+        let name = inputs[0];
+        let minutes = inputs[1];
+
+        name.value = nameText;
+        minutes.value = minutesText;
+
+        document.getElementById("ex-name-" + num).style.display = "none";
+        document.getElementById("ex-minutes-" + num).style.display = "none";
+        document.getElementById("edit-" + num).style.display = "none";
+        document.getElementById("save-" + num).className = "btn";
+
+        name.className = "input-text-" + num;
+        minutes.className = "input-text-" + num;
+      }
+    }
+
+    function save(id) {
+      let num = id.substring(5);
+      document.getElementById("form-name-" + num).value =
+        document.getElementById("name-input-" + num).value;
+      document.getElementById("edit-index-" + num).value = num;
+
+      if (document.getElementById("ex-sets-" + num)) {
+        document.getElementById("isCardio-" + num).value = false;
+        document.getElementById("form-sets-" + num).value =
+          document.getElementById("sets-input-" + num).value;
+        document.getElementById("form-reps-" + num).value =
+          document.getElementById("reps-input-" + num).value;
+        document.getElementById("form-weight-" + num).value =
+          document.getElementById("weight-input-" + num).value;
+      } else {
+        document.getElementById("isCardio-" + num).value = true;
+        document.getElementById("form-minutes-" + num).value =
+          document.getElementById("minutes-input-" + num).value;
+      }
+
+      document.getElementById("edit-form-" + num).submit();
+    }
+
+    function del(id) {
+      let num = id.substring(4);
+      document.getElementById("panel-" + num).className = "panel gray-panel";
+      document.getElementById("panel-" + num).style.backgroundImage = "conic-gradient(lightgray, gray, lightgray)";
+
+      for (let j = 0; j < document.getElementById("panel-" + num).getElementsByClassName("weekdays").length; j++) {
+        document.getElementById("weekdays-" + num + "-" + j).style.color = "gray";
+      }
+
+      setTimeout(() => {
+        document.getElementById("del-form-" + num).submit();
+      }, 1500);
+    }
+
+    function checkNumeric(id, text) {
+      let num = id.split("-")[2];
+      if (/[^0-9.]/.test(text)) {
+        document.getElementById("invisible-warn-" + num).className = "warn";
+      } else {
+        document.getElementById("invisible-warn-" + num).className =
+          "invisible-warn-" + num;
+      }
+    }
   </script>
 </body>
 

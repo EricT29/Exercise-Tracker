@@ -128,7 +128,7 @@ app.post("/edit-exercise", (req, res) => {
   });
   isMainPage
     ? res.render("index.ejs", { exercises: cookie })
-    : res.render("progress.ejs", { exercises: cookie });
+    : res.render("overview.ejs", { exercises: cookie });
 });
 
 app.post("/delete-exercise", (req, res) => {
@@ -140,14 +140,14 @@ app.post("/delete-exercise", (req, res) => {
     res.clearCookie("exercises");
     isMainPage
       ? res.render("index.ejs")
-      : res.render("progress.ejs", { exercises: cookie });
+      : res.render("overview.ejs", { exercises: cookie });
   } else {
     res.cookie("exercises", cookie, {
       expires: new Date(Date.now() + 604800000),
     });
     isMainPage
       ? res.render("index.ejs", { exercises: cookie })
-      : res.render("progress.ejs", { exercises: cookie });
+      : res.render("overview.ejs", { exercises: cookie });
   }
 });
 
@@ -183,7 +183,7 @@ app.get("/mod/:status/:index/:day", (req, res) => {
   res.cookie("exercises", cookie, {
     expires: new Date(Date.now() + 604800000),
   });
-  res.render("progress.ejs", { exercises: cookie });
+  res.render("overview.ejs", { exercises: cookie });
 });
 
 app.get("/clear", (req, res) => {
